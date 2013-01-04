@@ -22,11 +22,14 @@ import com.puppycrawl.tools.checkstyle.api.Check;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
+/**
+ * TODO Add Class comment
+ */
 public class NullConditionCheck extends Check {
 
     @Override
     public int[] getDefaultTokens() {
-        return new int[] { TokenTypes.EQUAL };
+        return new int[] {TokenTypes.EQUAL, TokenTypes.NOT_EQUAL};
     }
 
     @Override
@@ -39,33 +42,34 @@ public class NullConditionCheck extends Check {
     }
 
     /**
-     * Return true if current expression part need optimization
-     * @param aLogicNode current logic operator node
-     * @return boolean variable
+     * Return true if current expression part need optimization.
+     * 
+     * @param aLogicNode Current logic operator node
+     * @return Boolean variable
      */
     private boolean needOptimization(DetailAST aLogicNode) {
         final DetailAST[] children = getBothChildren(aLogicNode);
         final DetailAST firstOperand = children[0];
         final DetailAST secondOperand = children[1];
-        return !secondOperand.branchContains(TokenTypes.LITERAL_NULL)
-                && firstOperand.branchContains(TokenTypes.LITERAL_NULL);
+        return firstOperand.branchContains(TokenTypes.LITERAL_NULL) 
+        		&& !secondOperand.branchContains(TokenTypes.LITERAL_NULL);
     }
 
     /**
-     * Return both operators children
-     * @param aLogicNode current logic operator node
-     * @return array with children
+     * Return both operators children.
+     * 
+     * @param aLogicNode Current logic operator node
+     * @return Array with children
      */
     private DetailAST[] getBothChildren(DetailAST aLogicNode) {
         final DetailAST[] children = new DetailAST[2];
         DetailAST child = aLogicNode.getFirstChild();
-        for (int i = 0; child != null; ) {
+        for (int i = 0; child != null; child = child.getNextSibling()) {
             if (child.getType() != TokenTypes.LPAREN
                     && child.getType() != TokenTypes.RPAREN) {
-                children[i++] = child;
+                
+            	children[i++] = child;
             }
-
-            child = child.getNextSibling();
         }
 
         return children;
