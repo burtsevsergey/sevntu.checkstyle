@@ -23,27 +23,34 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 /**
- * TODO Add Class comment
+ * Check to standardize null condition expressions.
+ *
+ * Safe (in C++ approach) IF conditions.
+ * Example : "if (variable == null)" ==> "if (null == variable)"
+ * In Java there is no possibility to make occasionally "=" instead of "==".
+ * So we need to force developers to write "if (variable == null)".
+ *
+ * @author Sergey Burtsev
  */
 public class NullConditionCheck extends Check {
 
     @Override
     public int[] getDefaultTokens() {
-        return new int[] {TokenTypes.EQUAL, TokenTypes.NOT_EQUAL};
+        return new int[]{TokenTypes.EQUAL, TokenTypes.NOT_EQUAL};
     }
 
     @Override
     public void visitToken(DetailAST aDetailAST) {
         if (needOptimization(aDetailAST)) {
             log(aDetailAST.getLineNo(), "null.condition",
-                    aDetailAST.getText(), aDetailAST.getLineNo(),
-                    aDetailAST.getColumnNo());
+                    aDetailAST.getLineNo(), aDetailAST.getColumnNo(),
+                    aDetailAST.getText());
         }
     }
 
     /**
      * Return true if current expression part need optimization.
-     * 
+     *
      * @param aLogicNode Current logic operator node
      * @return Boolean variable
      */
@@ -51,24 +58,22 @@ public class NullConditionCheck extends Check {
         final DetailAST[] children = getBothChildren(aLogicNode);
         final DetailAST firstOperand = children[0];
         final DetailAST secondOperand = children[1];
-        return firstOperand.branchContains(TokenTypes.LITERAL_NULL) 
-        		&& !secondOperand.branchContains(TokenTypes.LITERAL_NULL);
+        return firstOperand.branchContains(TokenTypes.LITERAL_NULL)
+                && !secondOperand.branchContains(TokenTypes.LITERAL_NULL);
     }
 
     /**
      * Return both operators children.
-     * 
+     *
      * @param aLogicNode Current logic operator node
      * @return Array with children
      */
     private DetailAST[] getBothChildren(DetailAST aLogicNode) {
         final DetailAST[] children = new DetailAST[2];
-        DetailAST child = aLogicNode.getFirstChild();
-        for (int i = 0; child != null; child = child.getNextSibling()) {
-            if (child.getType() != TokenTypes.LPAREN
-                    && child.getType() != TokenTypes.RPAREN) {
-                
-            	children[i++] = child;
+        int i = 0;
+        for (DetailAST child = aLogicNode.getFirstChild(); child != null; child = child.getNextSibling()) {
+            if (child.getType() != TokenTypes.LPAREN && child.getType() != TokenTypes.RPAREN) {
+                children[i++] = child;
             }
         }
 
