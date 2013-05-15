@@ -43,7 +43,6 @@ public class NullConditionCheck extends Check {
     public void visitToken(DetailAST aDetailAST) {
         if (needOptimization(aDetailAST)) {
             log(aDetailAST.getLineNo(), "null.condition",
-                    aDetailAST.getLineNo(), aDetailAST.getColumnNo(),
                     aDetailAST.getText());
         }
     }
