@@ -1,6 +1,6 @@
 package com.github.sevntu.checkstyle.checks.coding;
 
-public class InputNullConditionCheck {
+public class InputAvoidNullAsFirstOperandInConditionCheck {
 
     private Object classField;
 

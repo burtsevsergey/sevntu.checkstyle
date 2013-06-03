@@ -32,7 +32,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  *
  * @author Sergey Burtsev
  */
-public class NullConditionCheck extends Check {
+public class AvoidNullAsFirstOperandInConditionCheck extends Check {
 
     @Override
     public int[] getDefaultTokens() {
@@ -42,7 +42,7 @@ public class NullConditionCheck extends Check {
     @Override
     public void visitToken(DetailAST aDetailAST) {
         if (needOptimization(aDetailAST)) {
-            log(aDetailAST.getLineNo(), "null.condition",
+            log(aDetailAST.getLineNo(), "avoid.null.as.first.operand.in.condition",
                     aDetailAST.getText());
         }
     }

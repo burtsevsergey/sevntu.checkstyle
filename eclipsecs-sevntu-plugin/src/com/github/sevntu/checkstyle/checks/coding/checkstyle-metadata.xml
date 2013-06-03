@@ -40,6 +40,11 @@
             </property-metadata>
             <message-key key="avoid.modifiers.for.types"/>
         </rule-metadata>
+
+        <rule-metadata name="%AvoidNullAsFirstOperandInCondition.name" internal-name="AvoidNullAsFirstOperandInConditionCheck" parent="TreeWalker">
+            <alternative-name internal-name="com.github.sevntu.checkstyle.checks.coding.AvoidNullAsFirstOperandInConditionCheck"/>
+            <description>%AvoidNullAsFirstOperandInCondition.desc</description>
+        </rule-metadata>
  
         <rule-metadata name="%CustomDeclarationOrder.name" internal-name="CustomDeclarationOrder" parent="TreeWalker">
             <alternative-name internal-name="com.puppycrawl.tools.checkstyle.checks.coding.CustomDeclarationOrderCheck"/>
@@ -151,11 +156,6 @@
                 	<description>%NestedTernaryCheck.ignoreFinal</description>
            		 </property-metadata>
 	    </rule-metadata>
-        
-        <rule-metadata name="%NullCondition.name" internal-name="NullConditionCheck" parent="TreeWalker">
-			<alternative-name internal-name="com.github.sevntu.checkstyle.checks.coding.NullConditionCheck"/>
-			<description>%NullCondition.desc</description>
-		</rule-metadata>
 
         <rule-metadata name="%OverridableMethodInConstructor.name" internal-name="OverridableMethodInConstructor" parent="TreeWalker">
             <alternative-name internal-name="com.puppycrawl.tools.checkstyle.checks.coding.OverridableMethodInConstructorCheck" />

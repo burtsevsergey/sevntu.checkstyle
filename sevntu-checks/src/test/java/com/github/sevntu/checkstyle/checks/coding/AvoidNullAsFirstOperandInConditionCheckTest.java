@@ -4,14 +4,12 @@ import com.github.sevntu.checkstyle.BaseCheckTestSupport;
 import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
 import org.junit.Test;
 
-import java.io.*;
-
-public class NullConditionCheckTest extends BaseCheckTestSupport {
+public class AvoidNullAsFirstOperandInConditionCheckTest extends BaseCheckTestSupport {
 
 	@Test
     public void testAll() throws Exception
     {
-        final DefaultConfiguration checkConfig = createCheckConfig(NullConditionCheck.class);
+        final DefaultConfiguration checkConfig = createCheckConfig(AvoidNullAsFirstOperandInConditionCheck.class);
         final String[] expected = {
         		createErrorMessage(27, "=="),
         		createErrorMessage(28, "!="),
@@ -36,7 +34,7 @@ public class NullConditionCheckTest extends BaseCheckTestSupport {
                 createErrorMessage(92, "=="),
                 createErrorMessage(93, "=="),
         };
-        verify(checkConfig, getPath("InputNullConditionCheck.java"), expected);
+        verify(checkConfig, getPath("InputAvoidNullAsFirstOperandInConditionCheck.java"), expected);
     }
 
     /**
