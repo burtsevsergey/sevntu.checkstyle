@@ -25,10 +25,14 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 /**
  * Check to standardize null condition expressions.
  *
- * Safe (in C++ approach) IF conditions.
- * Example : "if (variable == null)" ==> "if (null == variable)"
- * In Java there is no possibility to make occasionally "=" instead of "==".
- * So we need to force developers to write "if (variable == null)".
+ * In C, where boolean types don't exist, it's useful to write
+ * <code>if (null == variable)</code>
+ * rather than
+ * <code>if (variable == null)</code>
+ * because if you forget one of the equal sign, you end up with
+ * <code>if (variable = 5)</code>
+ * which assigns null to variable and always evaluate to true.
+ * But in Java, a boolean is a boolean. And with !=, there is no reason at all.
  *
  * @author Sergey Burtsev
  */
